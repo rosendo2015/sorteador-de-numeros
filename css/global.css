@@ -31,11 +31,11 @@
 body {
   font-family: var(--font-family-sora);
   color: var(--text-primary);
-  background-color: var(--background-primary);
   background: url(../assets/background.svg);
-  background-repeat: no-repeat;
+  background-color: var(--background-primary);
+
   background-size: cover;
-  background-position: -0px -20px;
+
   h1 {
     text-transform: uppercase;
   }
