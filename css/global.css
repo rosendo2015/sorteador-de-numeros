@@ -31,10 +31,16 @@
 body {
   font-family: var(--font-family-sora);
   color: var(--text-primary);
-  background: url(../assets/background.svg);
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url(../assets/background.svg);
   background-color: var(--background-primary);
-
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .app {
   width: 100%;
