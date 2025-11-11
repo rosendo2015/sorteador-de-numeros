@@ -19,9 +19,14 @@
   --accent-green: #77C0A;
   --accent-lime: #d1dc97;
   --accent-red: #e9a9b3;
-  --gradient-border: #77c0af 0%, #d1dc97 14.84%, #e9a9b3 32.15%, #d586e0 65.79%,
-    #91a1fa 84.58%;
-  --gradient-background: #d586e0 0%, #91a1fa 98.93%;
+  --gradient-border: linear-gradient(
+    #77c0af 0%,
+    #d1dc97 14.84%,
+    #e9a9b3 32.15%,
+    #d586e0 65.79%,
+    #91a1fa 84.58%
+  );
+  --gradient-background: linear-gradient(90deg, #d586e0 0%, #91a1fa 95.93%);
   --gradient-content: linear-gradient(90deg, #c7c9cc 0%, #3d3d3d 100%);
 
   --font-family-sora: "Sora", sans-serif;
@@ -109,6 +114,7 @@ header {
     & .wrapper-input {
       display: flex;
       flex-direction: column;
+      text-align: center;
       gap: 0.5rem;
       label {
         font-size: 1rem;
@@ -117,8 +123,9 @@ header {
       }
       & input {
         text-align: center;
-        width: 100px;
-        border-radius: 0.25rem;
+        width: 86px;
+        height: 56px;
+        border-radius: 0.5rem;
         border: none;
         padding: 4px 8px;
         background-color: var(--background-secondary);
@@ -133,6 +140,46 @@ header {
     align-items: center;
     gap: 0.5rem;
     margin-block: 20px 40px;
+    position: relative;
+    width: 360px;
+    height: 30px;
+    p {
+      margin-left: 40px;
+    }
+    input {
+      display: none;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 4px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-background);
+      border-radius: 34px;
+      width: 40px;
+      height: 24px;
+      transition: 0.4s;
+    }
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+    input:checked + .slider {
+      background-color: #4caf50;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(16px);
+    }
   }
   button {
     display: flex;
@@ -168,5 +215,45 @@ header {
     p {
       font-size: 12px;
     }
+  }
+}
+@media (width >= 1200px) {
+  .app {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "title-principal wrapper-form"
+      "info wrapper-form";
+    margin-inline: auto;
+    max-width: 1200px;
+  }
+  header {
+    max-width: 1100px;
+
+    grid-area: header;
+    .logo {
+      text-align: left;
+    }
+  }
+  .title-principal {
+    grid-area: title-principal;
+    width: 508px;
+
+    h1 {
+      font-family: var(--font-family-sora);
+      font-size: 72px;
+      line-height: 93px;
+      letter-spacing: -2.88px;
+      color: var(--text-primary);
+    }
+  }
+  .info {
+    grid-area: info;
+    width: 508px;
+  }
+  .wrapper-form {
+    grid-area: wrapper-form;
+
+    width: 482px;
   }
 }
