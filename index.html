@@ -37,14 +37,14 @@
                 <div class="inputs">
                     <div class="wrapper-input">
                         <label for="number">number</label>
-                        <input id="number" type="text" value="2" />
+                        <input id="qtdNum" type="text" value="2" />
                     </div>
                     <div class="wrapper-input">
                         <label for="numStart">de</label>
                         <input id="numStart" type="text" value="1" />
                     </div>
                     <div class="wrapper-input">
-                        <label for="numEnd">de</label>
+                        <label for="numEnd">a</label>
                         <input id="numEnd" type="text" value="100" />
                     </div>
                 </div>
@@ -53,13 +53,27 @@
                         <input type="checkbox" id="toggleBtn">
                         <span class="slider"></span>
                     </label>
-                    <p id="statusBTN">Não repetir números</p>
+                    <p id="statusBTN">Repetir números</p>
                 </div>
                 <button>
                     sortear
                     <img src="assets/arrow-left.svg" alt="">
                 </button>
+
             </form>
+            <div class="result hide">
+                <h2>RESULTADO DO SORTEIO</h2>
+                <span id="contadorSorteios">1º RESULTADO</span>
+                <div id="resultado" class="numbers">
+                    <!-- Números sorteados aparecerão aqui -->
+                </div>
+                <button id="btnSortearNovamente" class="btn-retry hide">
+                    Sortear novamente
+                    <img src="assets/play.svg" alt="">
+                </button>
+
+            </div>
+
         </div>
 
         <div class="info">
