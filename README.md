@@ -7,7 +7,9 @@
 ## :dart: Desafio
 
 - Javascript
-- ### Sortear números 
+- ## Sortear números 
+
+![preview](.github/preview-sorteio.png)
 - O usuário pode escolher a quantidade de números a serem sorteados junto com o número inicial e final que fará parte desse sorteio, caso queira pode fazer novo sorteio.
 - Criação de layouts com CSS;
 - CSS Flexbox;
