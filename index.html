@@ -11,6 +11,379 @@
         rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
     <title>Sorteador de números</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text-primary: #ffffff;
+            --content-secondary: #c7c9cc;
+            --content-tertiary: #d9d9d9;
+            --content-brand: #c58de7;
+            --color-inverse: #030203;
+            --background-primary: #020202;
+            --background-secondary: #111012;
+            --background-tertiary: #24222e;
+            --background-brand: #c58de7;
+            --background-gray: #3d3d3d;
+            --accent-pink: #d586e0;
+            --accent-blue: #91a1fa;
+            --accent-green: #77C0A;
+            --accent-lime: #d1dc97;
+            --accent-red: #e9a9b3;
+            --gradient-border: linear-gradient(-45deg,
+                    #77c0af 0%,
+                    #d1dc97 14.84%,
+                    #e9a9b3 32.15%,
+                    #d586e0 65.79%,
+                    #91a1fa 84.58%);
+            --gradient-background: linear-gradient(90deg, #d586e0 0%, #91a1fa 95.93%);
+            --gradient-content: linear-gradient(90deg, #c7c9cc 0%, #3d3d3d 100%);
+
+            --font-family-sora: "Sora", sans-serif;
+            --font-family-roboto-mono: "Roboto Mono", monospace;
+            --font-family-roboto-flex: "Roboto Flex", sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-sora);
+            color: var(--text-primary);
+            background-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 1),
+                    rgba(0, 0, 0, 0.7)),
+                url(../assets/background.svg);
+            background-color: var(--background-primary);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 319px;
+            margin-inline: auto;
+            padding-block: 44px;
+        }
+
+        header {
+            width: 100%;
+
+            .logo {
+                margin-bottom: 46px;
+                text-align: center;
+
+                & img {
+                    width: 172px;
+                    height: 38px;
+                }
+            }
+        }
+
+        .title-principal {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+
+            span {
+                font-family: var(--font-family-roboto-mono);
+                background: var(--gradient-content);
+                font-size: 1rem;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            h1 {
+                font-family: var(--font-family-sora);
+                font-size: 40px;
+                font-weight: 800;
+                line-height: 52px;
+                letter-spacing: -1.6px;
+            }
+        }
+
+        .subtitle {
+            font-family: var(--font-family-roboto-flex);
+            margin-bottom: 40px;
+
+            h2 {
+                font-size: 20px;
+                text-transform: uppercase;
+                margin-bottom: 2px;
+                color: var(--text-primary);
+            }
+
+            p {
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 21px;
+                white-space: wrap;
+                color: var(--content-tertiary);
+            }
+        }
+
+        .form-draw {
+            margin-bottom: 80px;
+
+            & .inputs {
+                max-width: 100%;
+                display: flex;
+                gap: 12px;
+
+                & .wrapper-input {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 0.5rem;
+
+                    label {
+                        font-size: 1rem;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                    }
+
+                    & input {
+                        text-align: center;
+                        width: 86px;
+                        height: 56px;
+                        border-radius: 0.5rem;
+                        border: none;
+                        padding: 4px 8px;
+                        background-color: var(--background-secondary);
+                        font-size: 32px;
+                        font-weight: 700;
+                        color: var(--text-primary);
+                    }
+                }
+
+                .wrapper-input::before {
+                    content: "";
+                    position: absolute;
+                    width: 100%+4px;
+                    height: 100%+4px;
+                    top: 26px;
+                    left: -1px;
+                    right: -1px;
+                    bottom: -1px;
+                    border-radius: 0.5rem;
+                    background: var(--gradient-border);
+                    z-index: -1;
+                    transition: 0.3s;
+                    display: none;
+                }
+
+                .wrapper-input:hover::before {
+                    display: block;
+                }
+            }
+
+            .wrapper-checkbox {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-block: 20px 40px;
+                position: relative;
+                width: 360px;
+                height: 30px;
+
+                p {
+                    margin-left: 40px;
+                }
+
+                input {
+                    display: none;
+                }
+
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 4px;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: var(--gradient-background);
+                    border-radius: 34px;
+                    width: 40px;
+                    height: 24px;
+                    transition: 0.4s;
+                }
+
+                .slider::before {
+                    content: "";
+                    position: absolute;
+                    height: 18px;
+                    width: 18px;
+                    left: 3px;
+                    bottom: 3px;
+                    background-color: white;
+                    border-radius: 50%;
+                    transition: 0.4s;
+                }
+
+                input:checked+.slider {
+                    background-color: #4caf50;
+                }
+
+                input:checked+.slider::before {
+                    transform: translateX(16px);
+                }
+            }
+        }
+
+        #btnSortearNovamente {
+            margin-block: 2rem 6rem;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding-block: 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--background-tertiary);
+            width: 100%;
+            border: none;
+            font-family: var(--font-family-roboto-flex);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            width: 100%+4px;
+            height: 100%+4px;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: 0.5rem;
+            background: var(--gradient-border);
+            z-index: -1;
+            transition: 0.3s;
+            display: none;
+        }
+
+        button:hover::before {
+            display: block;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+
+            .wrapper-info {
+                display: flex;
+                align-items: self-start;
+                gap: 0.5rem;
+
+                span {
+                    font-size: 14px;
+                    color: var(--background-brand);
+                    white-space: nowrap;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .numbers {
+            margin-block: 16px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            .number {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 88px;
+                height: 88px;
+                border-radius: 50%;
+                background: var(--background-gray);
+                font-family: var(--font-family-roboto-mono);
+                font-size: 3rem;
+                font-weight: 700;
+                color: var(--text-primary);
+            }
+        }
+
+        .result {
+            text-align: center;
+
+            span {
+                display: block;
+                margin-top: 1rem;
+                font-size: 16px;
+                color: var(--content-tertiary);
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+
+        @media (width >=1200px) {
+            .app {
+                display: grid;
+                grid-template-areas:
+                    "header header"
+                    "title-principal wrapper-form"
+                    "info wrapper-form";
+                max-width: 1065px;
+                margin-inline: auto;
+            }
+
+            header {
+                margin-inline: auto;
+                max-width: 1065px;
+
+                grid-area: header;
+
+                .logo {
+                    text-align: left;
+                }
+            }
+
+            .title-principal {
+                grid-area: title-principal;
+                width: 508px;
+
+                h1 {
+                    font-family: var(--font-family-sora);
+                    font-size: 72px;
+                    line-height: 93px;
+                    letter-spacing: -2.88px;
+                    color: var(--text-primary);
+                }
+            }
+
+            .info {
+                grid-area: info;
+                width: 508px;
+            }
+
+            .wrapper-form {
+                grid-area: wrapper-form;
+                width: 420px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -102,7 +475,110 @@
             </div>
         </div>
     </div>
-    <script src="js/script.js"></script>
+    <script>
+        const checkbox = document.getElementById('toggleBtn')
+        const statusBTN = document.getElementById('statusBTN')
+        const subtitle = document.getElementsByClassName('subtitle')
+        const form = document.querySelector('.form-draw')
+        const btnSortearNovamente = document.getElementById('btnSortearNovamente')
+        const qtdNum = parseInt(document.getElementById('qtdNum').value)
+        const numStart = parseInt(document.getElementById('numStart').value)
+        const numEnd = parseInt(document.getElementById('numEnd').value)
+        const permitirRepeticao = !document.getElementById('toggleBtn').checked
+        const resultadoDiv = document.getElementById('resultado')
+        const resultContainer = document.querySelector('.result')
+
+
+
+        let contadorSorteios = 0;
+
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
+        })
+
+        qtdNum.oninput = () => {
+            let valueQtdNum = qtdNum.value.replace(/\D/g, '')
+            qtdNum.value = valueQtdNum
+        }
+        numStart.oninput = () => {
+            let valueNUmStart = numStart.value.replace(/\D/g, '')
+            numStart.value = valueNUmStart
+        }
+        numEnd.oninput = () => {
+            let valueNumEnd = numEnd.value.replace(/\D/g, '')
+            numEnd.value = valueNumEnd
+        }
+
+        checkbox.addEventListener('change', function () {
+            statusBTN.textContent = this.checked
+                ? 'Não repetir números'
+                : 'repetir números';
+
+        })
+
+        function sortear() {
+
+
+            if (isNaN(qtdNum) === "" || isNaN(numStart) === "" || isNaN(numEnd) === "") {
+                resultadoDiv.innerHTML = '<p>Preencha todos os campos corretamente.</p>'
+                resultContainer.classList.remove('hide')
+                btnSortearNovamente.classList.remove('hide')
+                return
+            }
+
+            if (numStart > numEnd) {
+                resultadoDiv.innerHTML =
+                    '<p>O valor inicial deve ser menor ou igual ao final.</p>'
+                resultContainer.classList.remove('hide')
+                btnSortearNovamente.classList.remove('hide')
+                return
+            }
+
+            const intervalo = numEnd - numStart + 1
+            if (!permitirRepeticao && qtdNum > intervalo) {
+                resultadoDiv.innerHTML =
+                    '<p>Quantidade maior que o intervalo disponível sem repetições.</p>'
+                resultContainer.classList.remove('hide')
+                btnSortearNovamente.classList.remove('hide')
+                return
+            }
+
+            const numerosSorteados = []
+            const usados = new Set()
+
+            while (numerosSorteados.length < qtdNum) {
+                const numero = Math.floor(Math.random() * intervalo) + numStart
+
+                if (permitirRepeticao || !usados.has(numero)) {
+                    numerosSorteados.push(numero)
+                    usados.add(numero)
+                }
+            }
+
+            resultadoDiv.innerHTML = numerosSorteados
+                .map(num => `<span class="number">${num}</span>`)
+                .join('')
+            resultContainer.classList.remove('hide')
+            btnSortearNovamente.classList.remove('hide')
+            form.classList.add('hide')
+            subtitle[0].classList.add('hide')
+
+            contadorSorteios++;
+            document.getElementById('contadorSorteios').textContent = `${contadorSorteios}º RESULTADO`;
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            sortear()
+        })
+
+        btnSortearNovamente.addEventListener('click', function () {
+            sortear()
+        })
+
+
+    </script>
 </body>
 
 </html>
